@@ -3,7 +3,7 @@
 JavaScript-kurssin projektityö (vaihtoehto 2: Smart Form). Selaimessa toimiva sovellus, jolla seurataan viikon liikuntasuorituksia.
 
 - **Tekijä:** TODO: nimi
-- **Julkaistu sovellus:** TODO: https://KÄYTTÄJÄTUNNUS.github.io/liikuntaseuranta/
+- **Julkaistu sovellus:** https://jehkis.github.io/liikuntaseuranta/
 - **Esitysvideo:** TODO: linkki videoon
 
 ## Suunnitelma
