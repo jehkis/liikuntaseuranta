@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viikon liikuntaseuranta</title>
+
+    <!-- Tyylit ovat omassa tiedostossaan -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header class="page-header">
+        <h1>Viikon liikuntaseuranta</h1>
+        <p>Kirjaa viikon liikuntasuoritukset ja katso, mihin aika on kulunut.</p>
+    </header>
+
+    <main class="layout">
+
+        <div class="column">
+
+            <!-- AIEMPI VIIKKO: näytetään lomakkeen yläpuolella, kun aiempi viikko on avattu -->
+            <section class="card" id="viewing-card" aria-labelledby="viewing-title" hidden>
+                <h2 id="viewing-title">Viikko</h2>
+                <p class="viewing-text" id="viewing-text"></p>
+                <p class="viewing-text" id="viewing-note"></p>
+                <button type="button" class="button button-primary" id="back-button">Palaa nykyiseen viikkoon</button>
+            </section>
+
+            <!-- LOMAKE: uuden merkinnän lisääminen -->
+            <section class="card" id="form-card" aria-labelledby="form-title">
+                <h2 id="form-title">Lisää suoritus</h2>
+
+                <!-- novalidate: selaimen oma tarkistus pois, koska tarkistus tehdään script.js:ssä -->
+                <form id="entry-form" novalidate>
+
+                    <div class="field">
+                        <label for="day">Päivä</label>
+                        <select id="day">
+                            <option value="">Valitse päivä</option>
+                            <option value="0">Maanantai</option>
+                            <option value="1">Tiistai</option>
+                            <option value="2">Keskiviikko</option>
+                            <option value="3">Torstai</option>
+                            <option value="4">Perjantai</option>
+                            <option value="5">Lauantai</option>
+                            <option value="6">Sunnuntai</option>
+                        </select>
+                        <p class="error-message" id="day-error"></p>
+                    </div>
+
+                    <div class="field">
+                        <label for="category">Laji</label>
+                        <select id="category">
+                            <option value="">Valitse laji</option>
+                            <option value="Juoksu">Juoksu</option>
+                            <option value="Kävely">Kävely</option>
+                            <option value="Kuntosali">Kuntosali</option>
+                            <option value="Pyöräily">Pyöräily</option>
+                            <option value="Uinti">Uinti</option>
+                            <option value="Muu">Muu laji</option>
+                            <option value="Lepopäivä">Lepopäivä</option>
+                        </select>
+                        <p class="error-message" id="category-error"></p>
+                    </div>
+
+                    <!-- Tämä kenttä näytetään vain, kun lajiksi on valittu "Muu laji" -->
+                    <div class="field" id="custom-field" hidden>
+                        <label for="custom">Mikä laji?</label>
+                        <input type="text" id="custom" maxlength="30" placeholder="esim. Sulkapallo">
+                        <p class="error-message" id="custom-error"></p>
+                    </div>
+
+                    <!-- Tämä valikko näytetään vain, kun lajiksi on valittu "Kuntosali" -->
+                    <div class="field" id="workout-field" hidden>
+                        <label for="workout">Treeni</label>
+                        <select id="workout">
+                            <option value="">Valitse treeni</option>
+                            <option value="Koko kroppa">Koko kroppa</option>
+                            <option value="Yläkroppa">Yläkroppa</option>
+                            <option value="Alakroppa">Alakroppa</option>
+                            <option value="Rinta">Rinta</option>
+                            <option value="Selkä">Selkä</option>
+                            <option value="Jalat">Jalat</option>
+                            <option value="Olkapäät">Olkapäät</option>
+                            <option value="Kädet">Kädet</option>
+                            <option value="Keskivartalo">Keskivartalo</option>
+                        </select>
+                        <p class="error-message" id="workout-error"></p>
+                    </div>
+
+                    <!-- Tämä kenttä näytetään vain lajeilla, joissa liikutaan matkaa (esim. juoksu) -->
+                    <div class="field" id="distance-field" hidden>
+                        <label for="distance">Kilometrit <span class="optional">(vapaaehtoinen)</span></label>
+                        <input type="number" id="distance" step="0.1" placeholder="esim. 5,2">
+                        <p class="error-message" id="distance-error"></p>
+                    </div>
+
+                    <!-- Kesto piilotetaan, kun valitaan "Lepopäivä" -->
+                    <div class="field" id="hours-field">
+                        <label for="hours">Kesto tunteina</label>
+                        <input type="number" id="hours" step="0.25" placeholder="esim. 1,5">
+                        <p class="error-message" id="hours-error"></p>
+                    </div>
+
+                    <div class="field">
+                        <label for="description">Fiilis <span class="optional">(vapaaehtoinen)</span></label>
+                        <input type="text" id="description" maxlength="80" placeholder="esim. Hyvä fiilis, jaksoin hyvin">
+                        <p class="error-message" id="description-error"></p>
+                    </div>
+
+                    <button type="submit" class="button button-primary">Lisää suoritus</button>
+                </form>
+            </section>
+
+        </div>
+
+        <div class="column">
+
+            <!-- YHTEENVETO: näytetään vain, kun merkintöjä on -->
+            <section class="card" id="summary" aria-labelledby="summary-title" hidden>
+                <h2 id="summary-title">Yhteenveto</h2>
+
+                <div class="totals">
+                    <p class="total">
+                        <span class="total-number" id="total-hours">0 h</span>
+                        <span class="total-label" id="total-label">yhteensä</span>
+                    </p>
+
+                    <!-- Kilometrit näytetään vain, kun matkaa on kirjattu -->
+                    <p class="total" id="distance-total" hidden>
+                        <span class="total-number" id="total-distance">0 km</span>
+                        <span class="total-label">matkaa yhteensä</span>
+                    </p>
+                </div>
+
+                <h3>Lajeittain</h3>
+                <ul class="category-list" id="category-list"></ul>
+
+                <h3>Päivittäin</h3>
+                <div class="day-chart" id="day-chart"></div>
+            </section>
+
+            <!-- LISTA: kaikki viikon merkinnät -->
+            <section class="card" aria-labelledby="entries-title">
+                <div class="card-header">
+                    <h2 id="entries-title">Viikon suoritukset</h2>
+                    <div class="card-actions">
+                        <button type="button" class="button button-small" id="new-week-button" hidden>Aloita uusi viikko</button>
+                        <button type="button" class="button button-ghost" id="clear-button" hidden>Tyhjennä viikko</button>
+                    </div>
+                </div>
+
+                <p class="empty" id="empty-message">Ei vielä suorituksia. Lisää ensimmäinen lomakkeella.</p>
+                <ul class="entry-list" id="entry-list"></ul>
+            </section>
+
+            <!-- HISTORIA: aiempien viikkojen yhteenvedot, näytetään vain kun niitä on -->
+            <section class="card" id="history" aria-labelledby="history-title" hidden>
+                <h2 id="history-title">Aiemmat viikot</h2>
+                <ul class="entry-list" id="history-list"></ul>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- JavaScript on omassa tiedostossaan -->
+    <script src="js/script.js"></script>
+
+</body>
+</html>
