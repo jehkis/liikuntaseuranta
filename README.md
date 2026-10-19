@@ -2,9 +2,9 @@
 
 JavaScript-kurssin projektityö (vaihtoehto 2: Smart Form). Selaimessa toimiva sovellus, jolla seurataan viikon liikuntasuorituksia.
 
-- **Tekijä:** TODO: nimi
+- **Tekijä:** Joona Jehkonen
 - **Julkaistu sovellus:** https://jehkis.github.io/liikuntaseuranta/
-- **Esitysvideo:** TODO: linkki videoon
+- **Esitysvideo:** TODO: lisää linkki, kun video on valmis
 
 ## Suunnitelma
 
@@ -89,21 +89,36 @@ js/script.js    sovelluksen logiikka
 
 ## Tekoälyn käyttö
 
-TODO: tarkista ja täydennä omin sanoin.
+Sovelluksen koodi (HTML, CSS ja JavaScript) on tuotettu tekoälyllä (Claude Code, Anthropic). Annoin tekoälylle tehtävänannon ja kuvasin, millaisen sovelluksen halusin, ja ohjasin työtä palautteella. Omia ideoitani olivat esimerkiksi lajikohtaiset lisäkentät (kilometrit, kuntosalitreeni, oma laji), lepopäivä ja aiempien viikkojen tallentaminen.
 
-Sovelluksen koodi (HTML, CSS ja JavaScript) sekä tämän README:n runko on tuotettu tekoälyn (Claude Code, Anthropic) avulla tehtävänannon pohjalta. Tekoälyä käytettiin myös sovelluksen testaamiseen. Kävin koodin läpi ja ...
+Tekoälyä käytettiin:
+
+- **koko koodin kirjoittamiseen**, koska halusin nähdä, millainen toimiva ja hyvin jäsennelty sovellus vaatimuksista syntyy
+- **README:n rungon kirjoittamiseen** (suunnitelma, rautalankakaavio, ominaisuudet ja tarkistukset)
+- **koodin selittämiseen**: kävin `script.js`:n läpi osa kerrallaan tekoälyn kanssa, jotta ymmärrän sen ja osaan selittää sen esitysvideolla.
+
+Testasin sovelluksen itse selaimessa ja selaimen kehitystyökaluilla (Elements, Console, Application → Local Storage).
 
 ## Itsearviointi
 
-TODO: kirjoita oma arvio, esim.
+**Mikä onnistui hyvin?** Sovellus täyttää tehtävänannon vaatimukset: syötteet tarkistetaan (tyhjät, liian lyhyet, negatiiviset ja liian suuret arvot), virheellinen kenttä saa punaisen reunuksen ja virheilmoituksen, tiedot tallentuvat `localStorage`en ja yhteenveto näyttää tunnit yhteensä, lajeittain ja prosentteina. Lisäksi mukana on valinnaisia ominaisuuksia: alasvetovalikot, lajin mukaan näkyvät ja piilotettavat kentät, kaaviot ilman kirjastoja ja aiempien viikkojen historia. Sovellus on julkaistu GitHub Pagesissa ja toimii myös puhelimella.
 
-- Mikä onnistui hyvin?
-- Mikä oli vaikeaa ja mitä opin?
-- Mitä parantaisin tai lisäisin seuraavaksi?
-- Oma pistearvio (0–10) arviointikriteerien perusteella.
+**Mikä oli vaikeaa ja mitä opin?** Koska koodi tehtiin tekoälyllä, suurin työ oli ymmärtää valmis, melko laaja koodi. Opin, miten lomakkeen arvot luetaan ja tarkistetaan, miksi tieto pitää muuttaa `JSON.stringify`:llä tekstiksi ennen `localStorage`en tallentamista ja miten koko näkymä piirretään uudelleen yhdestä taulukosta (`render()`). Vaikeinta oli seurata lepopäivän ja aiempien viikkojen logiikkaa, koska ne vaikuttavat moneen kohtaan koodissa.
+
+**Mitä parantaisin?** Kirjoittaisin seuraavaksi enemmän koodia itse, jotta oma osaaminen kehittyisi. Ominaisuuksista lisäisin suorituksen muokkaamisen, vedä ja pudota -järjestämisen ja viikkojen vertailun kaaviona.
+
+**Pistearvio: 8/10.** Tekniset kriteerit (toimivuus, kommentit, ulkoasu, GitHub, README ja julkaisu) täyttyvät. Vähennän arviosta, koska koodi on pääosin tekoälyn kirjoittamaa ja oma osuuteni on suunnittelua, ohjaamista, testaamista ja koodin ymmärtämistä.
 
 ## Lähteet
 
-TODO: lisää käyttämäsi lähteet Laurean viittausohjeiden mukaisesti, esim.
+Sovelluksessa käytettyjen tekniikoiden dokumentaatio ja kurssin materiaali:
 
-- MDN Web Docs. Window: localStorage property. Viitattu pp.kk.vvvv. https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
+- Laurea-ammattikorkeakoulu. Web Development 1 -kurssin työpajamateriaalit (WS04 DOM, WS05 Forms and localStorage). Viitattu 19.10.2026. https://github.com/juhkast/laurea-web-development-1
+- MDN Web Docs. Window: localStorage property. Viitattu 19.10.2026. https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
+- MDN Web Docs. JSON.stringify(). Viitattu 19.10.2026. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+- MDN Web Docs. Client-side form validation. Viitattu 19.10.2026. https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation
+- MDN Web Docs. Element: classList property. Viitattu 19.10.2026. https://developer.mozilla.org/en-US/docs/Web/API/Element/classList
+- MDN Web Docs. Document: createElement() method. Viitattu 19.10.2026. https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement
+- MDN Web Docs. aria-invalid. Viitattu 19.10.2026. https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-invalid
+- MDN Web Docs. prefers-color-scheme. Viitattu 19.10.2026. https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-color-scheme
+- Anthropic. Claude Code. Käytetty koodin tuottamiseen ja selittämiseen syys–lokakuussa 2026. https://claude.com/claude-code
